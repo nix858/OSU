@@ -7,11 +7,6 @@
 
 using namespace std;
 
-
-
-cout << "hello";
-
-
 int* makeArray(const char* fileName, int& size) {
 
   vector<int> vect;
