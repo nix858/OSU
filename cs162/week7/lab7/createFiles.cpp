@@ -5,28 +5,12 @@
 
 using namespace std;
 
-/*
-  ofstream outputFile;
-  outputFile.exceptions ( ifstream::failbit | ifstream::badbit );
-  try {
-    ofstream outputFile;
-    outputFile.open((fileName + suffix).c_str());
-    while (!file.eof()) file.get();
-  }
-  catch (ifstream::failure e) {
-    cout << "Exception opening file";
-  }
-*/
-
 void createFile(string fileName, string suffix, int size, int zeroPos) {
   srand (time(NULL));                     // initialize random seed
-  ofstream outputFile;
-  outputFile.open((fileName + suffix).c_str());
 
-  if(outputFile.fail()) {
-    cout << "Error. File did not open!";
-    return;
-  }
+  ofstream outputFile;
+  outputFile.exceptions(ofstream::failbit | ofstream::badbit);
+  outputFile.open((fileName + suffix).c_str());
 
   for (int i = 0; i < size; ++i)
   {
@@ -67,40 +51,17 @@ int main()
     }
   } while(!validSize);
 
-  createFile(fileName, "_noZero", size, -1);
-  createFile(fileName, "_frontZero", size, 0);
-  createFile(fileName, "_midZero", size, size/2);
-  createFile(fileName, "_endZero", size, size - 1);
-  // the code you wish to time goes here
+  try {
+    createFile(fileName, "_noZero", size, -1);
+    createFile(fileName, "_frontZero", size, 0);
+    createFile(fileName, "_midZero", size, size/2);
+    createFile(fileName, "_endZero", size, size - 1);
+  }
+  catch (ofstream::failure& e) {
+    cout << "Error creating file!" << endl;
+    cout << e.what() << endl;
+    return 1;
+  }
  
   return 0;
 }
-
-try {
-  size = getValue();
-  }
-catch (IntValue::badValue) {
-  cout << "File size must be at least 1000." << endl;
-}
-
-class IntValue {
-private:
-  int value;
-  int low;
-public:
-  class lowValue
-  {}; //empty class declaration
-
-  IntValue(int value) {
-    this->value = value;
-  }
-
-  int getValue () {
-    cin >> value;
-
-    if (value < 1000) {
-      throw lowValue();
-    return value;
-    }
-  }
-};

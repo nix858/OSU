@@ -9,9 +9,11 @@ using namespace std;
 class Creature {
 protected:
     string type;
+    string name;
     double strength;
     int armor;
     double multiplier;
+    int points;
   
     virtual int rollAttackDice() = 0;
     virtual int rollDefenseDice() = 0;
@@ -19,6 +21,8 @@ protected:
 public:
     void setMultiplier(double multiplier);
     string getType();
+    void setName(string name)
+    void getName();
     double getMultiplier();
     void setArmor(int Armor);
     int getArmor();
@@ -30,6 +34,7 @@ public:
     virtual int defense();
     virtual void applyDamage(double damage);
     bool isDead();
+    void getName();
 };
 
 #endif

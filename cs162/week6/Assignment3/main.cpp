@@ -40,12 +40,20 @@ void fight(Creature* player1, Creature* player2) {
     if (player1->isDead()) {
       cout << player1->getType() << " is dead! " << endl;
       gameOver = true;
+      player1->addLoser();
+    }
+    else {
+      player1->addWinner();
+      player1->addPoints();
     }
     if (player2->isDead()) {
       cout << player2->getType() << " is dead! " << endl;
       gameOver = true;
+      player2->addloser();
+    else {
+      player2->addWinner();
+      playe2->addPoints();
     }
-
   }
   cout << "\n\n\n";
   delete player1;

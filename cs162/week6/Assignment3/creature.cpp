@@ -75,6 +75,29 @@ double Creature::getStrength() {
     return strength;
 }
 
+
+/*****************************************************
+** Function: setName()
+** Description: This is the setter function for name.
+** Parameters:  takes an sting name
+** Pre-Conditions: None
+** Post-Conditions: sets name. 
+*******************************************************/
+void Creature::setName(string name) {
+    this->name = name;
+}
+
+/*****************************************************
+** Function: getName()
+** Description: This is the function to get creature name.
+** Parameters: None
+** Pre-Conditions: None
+** Post-Conditions: returns name. 
+*******************************************************/
+sting Creature::getName() {
+    return name;
+}
+
 /*****************************************************
 ** Function: getType()
 ** Description: This is the getter function for type.

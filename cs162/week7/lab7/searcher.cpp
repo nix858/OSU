@@ -11,21 +11,23 @@ int* makeArray(const char* fileName, int& size) {
 
   vector<int> vect;
   ifstream inFile;
-  inFile.open(fileName);
-
-  if(inFile.fail()) {
-    cout << "Error. File did not open!" << endl;
-    exit(1);
-  }
-
-  while(!inFile.eof())
-  {
-    int temp;
-    inFile >> temp; 
-    vect.push_back(temp);
-  }   
+  inFile.exceptions(ifstream::failbit | ifstream::badbit);
   
-  inFile.close();
+  try {
+    inFile.open(fileName);
+    
+    while(!inFile.eof()) {
+      int temp;
+      inFile >> temp; 
+      vect.push_back(temp);
+    } 
+
+    inFile.close(); 
+  } 
+  catch (ifstream::failure& e){
+    cout << "File error!" << endl;
+    exit(1);
+  } 
 
   size = vect.size();
 
@@ -117,7 +119,6 @@ int main(int argc, char const *argv[]) {
   }
   cout << "time: " << (stop_s - start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
 
-
   start_s = clock();
   bubbleSort(array, size);
   cout << "Bubble sort completed" << endl;
@@ -128,7 +129,7 @@ int main(int argc, char const *argv[]) {
   zeroPos = binarySearch(array, size, 0);
   stop_s=clock();
   if (zeroPos == -1) {
-    throw string ("ERROR: NOT FOUND! \n");
+    cout << "NOT FOUND!" << endl;
   } else {
     cout << "Binary search result for '0' in array: " << zeroPos << endl;
   }
@@ -138,15 +139,3 @@ int main(int argc, char const *argv[]) {
   delete[] array; 
   return 0;
 }
-
-string e ="ERROR: Not Found!" << endl;
-
-try {
-  if (!zeroPos == -1) {
-    cout << "Linear search result for '0' in array: " << zeroPos << endl; 
-  }
-  catch (string e) {
-    cout << e;
-  }
-
-  cout << "time: " << (stop_s - start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
