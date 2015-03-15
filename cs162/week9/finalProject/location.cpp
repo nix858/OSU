@@ -1,8 +1,7 @@
 #include "location.h"
-
-string Location::getType() {
-  return "location";
-}
+#include "gameEntity.h"
+#include "gameState.h"
+#include "menu.h"
 
 void Location::addLocation(Location * loc) {
   this->locations.push_back(loc);
@@ -12,16 +11,16 @@ void Location::setName(string name) {
   this->name = name;
 }
 
-virtual string Location::getLabel() {
+string Location::getLabel() {
   return this->name;
 }
 
-virtual void Location::selectAction(GameState* gameState) {
+void Location::selectAction(GameState* gameState) {
   cout << "Welcome to " << this->getLabel();
-  Menu moveMenu("Where do you want to go?", this->nearbyLocations);
-  GameEntity selected = moveMenu.run();
-  gameState->returnLocation = gameState->currentLocation;       
-  gameState->currentLocation = (Location)selected; //We know this is a location so safe to cast
+  Menu moveMenu((char*)"Where do you want to go?", this->locations);
+  gameState->returnLocation = gameState->currentLocation;
+  Location selected = (Location)(moveMenu.run());      
+  gameState->currentLocation = selected; //We know this is a location so safe to cast
 }
 
 string Location::getClue(int level) {

@@ -1,70 +1,84 @@
 #include "game.h"
+#include "gameState.h"
+#include "gameEntity.h"
+#include "location.h"
+#include "bounty.h"
+#include "question.h"
+#include "person.h"
+#include "menu.h"
 
 void Game::start() {
   loadBounties();
   gameState = new GameState();
   gameState->money = 50000;
-  Location space = buildSolarSystem();
+  Location* space = buildSolarSystem();
   gameState->currentLocation = space;
-
+  //TODO: random select location;
+  gameState->bountyLocation = space->locations[0]->locations[1];
   //Bounty Loop
   do
   {
-    bountyCaptured = false;
-    Menu bountyMenu(allBounties);
-    gameState.bounty = (Bounty)bountyMenu.run();
+    gameState->bountyCaptured = false;
+    Menu bountyMenu((char*)"Select a bounty", allBounties);
+    Bounty* sel = (Bounty*)(bountyMenu.run());
+    gameState->bounty = sel;
     
     //Action Loop
     do
     {
-      currentLocation->selectAction(gameState);
+      gameState->currentLocation->selectAction(gameState);
     } while (gameState->money > 0 && !gameState->bountyCaptured);
 
   } while (gameState->money > 0);
     
 }
 
-Location* buildSolarSystem() {
-  Location ss;
-  ss.addLocation(buildMars());
-  return &ss;
+Location* Game::buildSolarSystem() {
+  Location* ss = new Location();
+  ss->addLocation(buildMars());
+  return ss;
 }
 
 Location* Game::buildMars() {
-  Location planet;
-  planet.setName("Mars");
-  planet.addLocation(buildBar("Cest La Vie (Bar)"));
-  planet.addLocation(buildBar("El Capitan (Bar)"));
-  return &planet;
+  Location* planet = new Location();
+  planet->setName("Mars");
+  planet->addLocation(buildBar((char*)"Cest La Vie (Bar)"));
+  planet->addLocation(buildBar((char*)"El Capitan (Bar)"));
+  return planet;
 }
 
-Location* Game::buildBar(string name) {
-  Location bar;
-  bar.setName(name);
+Location* Game::buildBar(char* name) {
+  Location* bar = new Location();
+  bar->setName(name);
   
   //Bar tender questions
-  Question getDrink("Give me a cowboy");
-  getDrink.addAnswer("Bourbon with milk")
-  getDrink.addSegue("Since you're a payin customer")
-  getDrink.setCost(500);
+  Question* getDrink = new Question("Give me a cowboy");
+  getDrink->addAnswer("Bourbon with milk");
+  getDrink->addClueSegue("Since you're a payin customer");
+  getDrink->setCost(500);
 
-  Question looking("Have you seen this person?");
-  looking.addAnswer("I don't think so");
-  looking.addSegue("actually, now that you mention it")
+  Question* looking = new Question("Have you seen this person?");
+  looking->addAnswer("I don't think so");
+  looking->addClueSegue("actually, now that you mention it");
 
-  Question lookingBribe("Have you seen this person?");
-  lookingBribe.addAnswer("nah");
-  lookingBribe.addSegue("now we're talkin")
-  lookingBribe.setCost(5000);
+  Question* lookingBribe = new Question("Have you seen this person?");
+  lookingBribe->addAnswer("nah");
+  lookingBribe->addClueSegue("now we're talkin");
+  lookingBribe->setCost(5000);
 
-  barTender.addQuestion(getDrink);
-  barTender.addQuestion(looking);
-  barTender.addQuestion(lookingBribe);
+  Person* barTender = new Person();
+  barTender->addQuestion(getDrink);
+  barTender->addQuestion(looking);
+  barTender->addQuestion(lookingBribe);
   
-  return &bar;
+  bar->addLocation(barTender);
+
+  return bar;
 }
 
 void Game::loadBounties() {
-  //TODO: random select location;
-  gameState->bountyLocation = locations[1];
+  Bounty* b1 = new Bounty();
+  b1->setName("Baker Pancharello");
+  b1->setValue(25000);
+  allBounties.push_back(b1);
 }

@@ -1,12 +1,14 @@
 #include <string>
 #include <vector>
 #include <iostream>
-
+#include "menu.h"
+#include "GameEntity.h"
+i
 using namespace std;
 
 
   
-Menu::Menu(string prompt, vector<MenuItem*> items) {
+Menu::Menu(char* prompt, vector<GameEntity*> items) {
   this->items = items;
   this->prompt = prompt;
 }
@@ -27,7 +29,3 @@ MenuItem* Menu::run() {
 
   return items[selection];
 }
-
-
-
-#endif;

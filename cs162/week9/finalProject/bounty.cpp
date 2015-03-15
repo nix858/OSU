@@ -1,8 +1,8 @@
 #include "bounty.h"
 #include <string>
 
-virtual string Bounty::getLabel() {
-  retun this->name;
+string Bounty::getLabel() {
+  return this->name;
 }
 
 void Bounty::setName(string name) {

@@ -1,3 +1,6 @@
+#ifndef QUESTION
+#define QUESTION
+#include "gameEntity.h"
 #include <string>
 
 class Question : public GameEntity {
@@ -16,3 +19,5 @@ public:
   string getLabel();
   Question(string q);
 };
+
+#endif

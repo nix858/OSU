@@ -1,6 +1,9 @@
-#include "gameEntity.h"
+#include <string>
+#include <iostream>
 #include "person.h"
+#include "gameEntity.h"
 #include "gameState.h"
+#include "question.h"
 
 
 void Person::selectAction(GameState* gameState) {
@@ -26,4 +29,8 @@ bool Person::wonClue() {
 
 void Person::addQuestion(Question q) {
   questions.push_back(q);
+}
+
+string Person::getLabel() {
+  return "bar tender";
 }

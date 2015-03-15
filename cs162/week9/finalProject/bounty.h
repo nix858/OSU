@@ -1,8 +1,7 @@
 #ifndef BOUNTY
 #define BOUNTY
 #include <string>
-#include <vector>
-#include <iostream>
+#include "gameEntity.h"
 
 using namespace std;
 
@@ -13,6 +12,7 @@ public:
   int getValue();
   void setValue(int val);
   void setName(string name);
+  virtual string getLabel();
 };
 
-#endif;
+#endif

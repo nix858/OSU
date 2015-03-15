@@ -3,25 +3,26 @@
 #include <string>
 #include <vector>
 #include <iostream>
-
+#include "gameEntity.h"
 using namespace std;
+struct GameState;
 
 class Location : public GameEntity {
   string name;
   string description;
-  vector<Location*> locations;
-
-  string[] level1Clues;
-  string[] level2Clues;
-  string[] level3Clues;
+  
+  vector<string> level1Clues;
+  vector<string> level2Clues;
+  vector<string> level3Clues;
 
 public:
+  vector<Location*> locations;
   void getClue(int level);
-
-  virtual void selectAction(GameState* gameState) = 0;
   void addLocation(Location* locations);
   void setName(string name);
-  Location()
+  Location();
+  virtual string getLabel();
+  virtual void selectAction(GameState* gameState);
 };
 
-#endif;
+#endif
