@@ -19,8 +19,16 @@
 
 using namespace std;
 
-void Battle::makeTestTeams() {
-  Creature* g1 = new Goblin();
+/*****************************************************
+** Function: makeTestTeams()
+** Description: This is the function I used to test the 
+** makeTeams() It made testing multiple combinations easier.
+** Parameters:  none
+** Pre-Conditions: None
+** Post-Conditions: none. 
+*******************************************************/
+/*void Battle::makeTestTeams() {
+  Creature* g1 = new Barbarian();
   g1->setTeamName("team1");
   g1->setName("Oliver");
   this->teams[0].push(g1);
@@ -29,14 +37,37 @@ void Battle::makeTestTeams() {
   g2->setTeamName("team2");
   g2->setName("Kitty");
   this->teams[1].push(g2);
+
+  Creature* g3 = new Shadow();
+  g3->setTeamName("team1");
+  g3->setName("Black");
+  this->teams[0].push(g3);
+
+  Creature* g4 = new Reptile();
+  g4->setTeamName("team2");
+  g4->setName("Lizzy");
+  this->teams[1].push(g4);
+
+  Creature* g5 = new BlueMen();
+  g5->setTeamName("team1");
+  g5->setName("Blue");
+  this->teams[0].push(g5);
+
+  Creature* g6 = new BlueMen();
+  g6->setTeamName("team2");
+  g6->setName("Tobias");
+  this->teams[1].push(g6);
 }
+*/
 
 /*****************************************************
-** Function: getName()
-** Description: This is the function to get creature name.
+** Function: makeTeams()
+** Description: This is the function to make the two teams. 
+** It contains all input output from user, and adds new 
+** players to their respective teams appropriatly.
 ** Parameters: None
 ** Pre-Conditions: None
-** Post-Conditions: returns name. 
+** Post-Conditions: creates teams. 
 *******************************************************/
 void Battle::makeTeams() {
   string type;
@@ -105,11 +136,15 @@ void Battle::makeTeams() {
 }
 
 /*****************************************************
-** Function: getName()
-** Description: This is the function to get creature name.
-** Parameters: None
+** Function: fight()
+** Description: This function will run a fight between two
+** players, buy calling attack() for each player and checking
+** to see if a player has died. It will also display if a player
+** has died.
+** Parameters: A Creature pointer for player1, and a Creature
+** pointer for player2.
 ** Pre-Conditions: None
-** Post-Conditions: returns name. 
+** Post-Conditions: 
 *******************************************************/
 void Battle::fight(Creature* player1, Creature* player2) {
   cout << "-----------------------------------------------------------------" << endl;
@@ -125,8 +160,8 @@ void Battle::fight(Creature* player1, Creature* player2) {
   while(!fightOver) {
     player1->attack(player2);
     player2->attack(player1);
-    cout << endl << player1->getType() << " strength: " << player1->getStrength() << endl;
-    cout << player2->getType() << " strength: " << player2->getStrength() << "\n\n\n";
+    cout << endl << player1->getName() << " strength: " << player1->getStrength() << endl;
+    cout << player2->getName() << " strength: " << player2->getStrength() << "\n\n\n";
     
     if (player1->isDead()) {
       cout << "Team:" << player1->getTeamName() 
@@ -145,11 +180,15 @@ void Battle::fight(Creature* player1, Creature* player2) {
 }
 
 /*****************************************************
-** Function: getName()
-** Description: This is the function to get creature name.
+** Function: doTournament()
+** Description: This function runs a tournament with team
+** one and team two, by calling the fight function. It also
+** adds players to the loser stack, and displays which team
+** has won the tournament.
 ** Parameters: None
 ** Pre-Conditions: None
-** Post-Conditions: returns name. 
+** Post-Conditions: Will add losers to the loser stack and 
+** Cout which team has won the tournament. 
 *******************************************************/
 void Battle::doTournament() {
   while(!teams[0].empty() && !teams[1].empty()) {
@@ -185,27 +224,16 @@ void Battle::doTournament() {
   else if(teams[1].empty()) {
     cout << "Team 1 wins!" << endl << endl;
   } 
-
-  /*
-  for (int i = 0; i < losers.size(); ++i) {
-    cout << "Team:" << losers.getTeamName() << "Name" << losers.getName();
-  }
-  
-  for (int k = 0; k < teams.size(); ++k) {
-    teams[k];
-    for (int j = 0; j < count; ++j) {
-      cout << "Team:" << teams.getTeamName() << "Name" << teams.getName();
-    }
-  }
-  */
 }
 
 /*****************************************************
-** Function: getName()
-** Description: This is the function to get creature name.
+** Function: displayTopThree()
+** Description: This is the function determines the top
+** three players from the tournament based on their earned
+** points, and then displays their info.
 ** Parameters: None
 ** Pre-Conditions: None
-** Post-Conditions: returns name. 
+** Post-Conditions: Displays top three players. 
 *******************************************************/
 void Battle::displayTopThree() {
   vector<Creature*> allPLayers;
@@ -222,8 +250,6 @@ void Battle::displayTopThree() {
     allPLayers.push_back(teams[1].front());
     teams[1].pop();
   }
-
-  cout << "pre-sort" << endl;
 
   sort(allPLayers.begin(), allPLayers.end(), creatureSort);
 
@@ -247,6 +273,14 @@ void Battle::displayTopThree() {
   } 
 }
 
+/*****************************************************
+** Function: creatureSort()
+** Description: This is compares the points total for two
+** players and returns which player has more points.
+** Parameters: None
+** Pre-Conditions: None
+** Post-Conditions: returns the player with more points. 
+*******************************************************/
 bool Battle::creatureSort(Creature* x, Creature* y) {
   return (x->getPoints() > y->getPoints());
 }

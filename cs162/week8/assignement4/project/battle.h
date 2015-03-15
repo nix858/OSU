@@ -12,8 +12,7 @@
 #include "creature.h"
 
 
-class Battle
-{
+class Battle{
   queue<Creature*> teams[2];
   stack<Creature*> losers;
   void fight(Creature*, Creature*);

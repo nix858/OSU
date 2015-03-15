@@ -6,6 +6,11 @@
 
 using namespace std;
 
+
+Creature::Creature(){
+  points = 0;
+}
+
 /*****************************************************
 ** Function: setMultiplier()
 ** Description: This is the setter function for multiplier.
@@ -153,7 +158,7 @@ void Creature::setTeamName(string teamName) {
 }
 
 /*****************************************************
-** Function: getName()
+** Function: getTeamName()
 ** Description: This is the function to get the team name.
 ** Parameters: None
 ** Pre-Conditions: None
@@ -182,7 +187,7 @@ void Creature::attack(Creature* opponent) {
     ss << totalDamage;
     multMsg = "/2 = " + ss.str();
   }
-  cout << this->type << " attacks " << opponent->type;
+  cout << this->name << " attacks " << opponent->getName();
   cout << " (" << damage << multMsg << ") " << endl;
   
   opponent->applyDamage(totalDamage, this);
@@ -220,8 +225,8 @@ void Creature::applyDamage(double damage, Creature* opponent) {
   double newStrength = strength - totalDamage;
   strength = newStrength;
 
-  cout << this->type << " defends " << " (" << def << ") + armor ("  << armor << ")"<< endl;
-  cout << this->type << " takes damage " << " (" << totalDamage << ") " << endl;
+  cout << this->name << " defends " << " (" << def << ") + armor ("  << armor << ")"<< endl;
+  cout << this->name << " takes damage " << " (" << totalDamage << ") " << endl;
 
   opponent->addPoints(totalDamage);
 }
@@ -242,7 +247,8 @@ bool Creature::isDead() {
 
 /*****************************************************
 ** Function: addPoints()
-** Description: This function will add points to a player.
+** Description: This function will add points to a player
+** if it is the winner of a fight.
 ** Parameters: none
 ** Pre-Conditions: None
 ** Post-Conditions: none 

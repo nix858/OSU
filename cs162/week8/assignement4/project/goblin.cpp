@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Goblin::Goblin() {
+Goblin::Goblin() : Creature() {
     type = "Goblin";
     strength = 8;
     maxStrength = 8;
@@ -29,10 +29,10 @@ Goblin::Goblin() {
 *******************************************************/
 void Goblin::attack(Creature* opponent) {
     double damage = rollAttackDice();
-    cout << this->type << " attacks " << opponent->getType();
+    cout << this->name << " attacks " << opponent->getName();
     cout << " (" << damage << ") " << endl;
     if (opponent->getType() != "Goblin" && damage == 12) {
-        cout << this->type << " has stuck the Achilles!" << endl;
+        cout << this->name << " has stuck the Achilles!" << endl;
         double prevMultiplier = opponent->getMultiplier();
         opponent->setMultiplier(prevMultiplier/2);
     }

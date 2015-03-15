@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Shadow::Shadow() {
+Shadow::Shadow() : Creature() {
     type = "Shadow";
     strength = 12;
     maxStrength = 12;
@@ -57,7 +57,7 @@ void Shadow::applyDamage(double damage, Creature* opponent) {
     double totalDamage = (damage - armor) - def;
 
     if (escapedDamage.rollDice() % 2 == 1) {
-        cout << this->type << " takes no damage " << endl;
+        cout << this->name << " takes no damage " << endl;
         return;
     }
     else {
@@ -66,8 +66,8 @@ void Shadow::applyDamage(double damage, Creature* opponent) {
             totalDamage = 0;
         }
         opponent->addPoints(totalDamage);
-        cout << this->type << "defends " << " (" << def << ") " << endl;
-        cout << this->type << "defends " << " (" << def << ") + armor ("  << armor << ")"<< endl;
+        cout << this->name << " defends " << " (" << def << ") + armor ("  << armor << ")"<< endl;
+        cout << this->name << " takes damage " << " (" << totalDamage << ") " << endl;
         int newStrength = strength - totalDamage;
         strength = newStrength;
     }

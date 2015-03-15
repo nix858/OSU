@@ -6,7 +6,7 @@ using namespace std;
 int main() {
   Battle battle;
   battle.makeTeams();
-  //battle.makeTestTeams();
+  /*battle.makeTestTeams();*/
   battle.doTournament();
   battle.displayTopThree();
   

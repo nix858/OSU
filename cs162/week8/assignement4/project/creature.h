@@ -14,7 +14,7 @@ protected:
     double maxStrength;
     int armor;
     double multiplier;
-    double points = 0;
+    double points;
     string teamName;
   
     virtual int rollAttackDice() = 0;
@@ -36,7 +36,7 @@ public:
     double getPoints();
     void setTeamName(string teamName);
     string getTeamName();
-    
+    Creature();
     virtual ~Creature(){};
     virtual void attack(Creature* opponent);
     virtual int defense();

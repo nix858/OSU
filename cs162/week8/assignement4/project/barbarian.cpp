@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Barbarian::Barbarian() {
+Barbarian::Barbarian() : Creature() {
     type = "Barbarian";
     strength = 12;
     maxStrength = 12;

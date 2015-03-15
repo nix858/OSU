@@ -4,7 +4,7 @@
 
 using namespace std;
 
-BlueMen::BlueMen() {
+BlueMen::BlueMen() : Creature() {
     type = "Blue Man";
     strength = 12;
     maxStrength = 12;

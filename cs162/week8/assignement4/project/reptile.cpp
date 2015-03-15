@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Reptile::Reptile() {
+Reptile::Reptile() : Creature() {
     type = "Reptile";
     strength = 18;
     maxStrength = 18;
