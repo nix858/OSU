@@ -22,14 +22,17 @@ void Person::selectAction(GameState* gameState) {
   
   Question* q = (Question*)sel;
   gameState->money -= q->getCost();
-  cout << '\t' << q->getAnswer() << endl;
+  cout << '\t' << '"' << q->getAnswer() << '"' << endl;
 
   if (wonClue())
   {
-    cout << q->getClueSegue() << "... ";
-    cout << gameState->bountyLocation->getClue(gameState->clueLevel) << endl;
+    cout << '\t' << '"' << q->getClueSegue() << "... ";
+    cout << gameState->bountyLocation->getClue(gameState->clueLevel) << '"' << endl << endl;
+    gameState->clueLevel += 1; 
   }
-
+  cin.ignore(10000,'\n');
+  cout << "press enter to continue.";
+  cin.get();
 }
 
 bool Person::wonClue() {

@@ -26,12 +26,26 @@ void Location::selectAction(GameState* gameState) {
   if (selected == back) {
     gameState->locationHistory->pop();
   } else {
+    gameState->money -= selected->getCost();
     gameState->locationHistory->push(gameState->currentLocation);
   }
   gameState->currentLocation = selected;
 }
 
+void Location::addClue(int level, string clue) {
+  level = level > 3 ? 3 : level;
+  if (level == 3)
+  {
+    level3Clues.push_back(clue);
+  } else if (level == 2) {
+    level2Clues.push_back(clue);
+  } else {
+    level1Clues.push_back(clue);
+  }
+}
+
 string Location::getClue(int level) {
+  level = level > 3 ? 3 : level;
   if (level == 3)
   {
     //TODO: randomly select level 3 clue
@@ -46,5 +60,5 @@ string Location::getClue(int level) {
 }
 
 Location::Location(){
-  //boop
+  this->cost = 100; //default
 }

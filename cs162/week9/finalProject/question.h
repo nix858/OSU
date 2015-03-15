@@ -5,7 +5,7 @@
 #include <vector>
 
 class Question : public GameEntity {
-  int cost;
+
   string question;
   string clueSegue;
   vector<string> answers;
@@ -18,9 +18,6 @@ public:
   void addClueSegue(string seg);
   string getClueSegue();
   
-  void setCost(int cost);
-  int getCost();
-
   string getLabel();
   Question(string q);
 };

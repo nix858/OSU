@@ -17,6 +17,7 @@ class Location : public GameEntity {
 
 public:
   vector<GameEntity*> locations;
+  void addClue(int level, string clue);
   string getClue(int level);
   void addLocation(Location* locations);
   void setName(string name);

@@ -20,14 +20,6 @@ string Question::getClueSegue() {
   return clueSegues[0];
 }
 
-void Question::setCost(int cost) {
-  this->cost = cost;
-}
-
-int Question::getCost() {
-  return this->cost;
-}
-
 string Question::getLabel() {
   stringstream suffix;
   if (cost > 0)

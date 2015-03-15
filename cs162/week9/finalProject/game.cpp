@@ -6,6 +6,7 @@
 #include "question.h"
 #include "person.h"
 #include "menu.h"
+#include "random.h"
 #include <stack>
 
 void Game::start() {
@@ -15,27 +16,47 @@ void Game::start() {
   Location* space = buildSolarSystem();
   gameState->currentLocation = space;
   gameState->locationHistory = new stack<GameEntity*>();
-
-  //TODO: random select location;
-  Location* mars = (Location*)space->locations[0];
-
-  gameState->bountyLocation = mars;
+  
   //Bounty Loop
-  do
-  {
-    
+  do {
     gameState->bountyCaptured = false;
+    gameState->clueLevel = 1;
     Menu bountyMenu((char*)"Select a bounty", allBounties);
     Bounty* sel = (Bounty*)(bountyMenu.run());
     gameState->bounty = sel;
+    gameState->bountyLocation = pickBountyLocation(space);
+
     //Action Loop
-    do
-    {
-      gameState->currentLocation->selectAction(gameState);
+    do {
+      system("clear");
+      if (gameState->currentLocation == gameState->bountyLocation)
+      {
+        int value = gameState->bounty->getValue();
+        cout << "You found your bounty! You collect: " << value << endl;
+        // TODO: bounty chase
+        gameState->money += value;
+        gameState->bountyCaptured = true;
+      } else {
+        cout << "Money: " << gameState->money << endl << endl;
+        gameState->currentLocation->selectAction(gameState);
+      }
     } while (gameState->money > 0 && !gameState->bountyCaptured);
 
   } while (gameState->money > 0);
-    
+  cout << "You have run out of money! Game Over." << endl;
+}
+
+Location* Game::pickBountyLocation(Location* space) {
+  Random rnd;
+  
+  int randomPlanetIndex = rnd.between(0, space->locations.size() - 1);
+  Location* planet = (Location*)space->locations[randomPlanetIndex];
+
+  int randomAreaIndex = rnd.between(0, planet->locations.size() - 1);
+  cout << "Area: " << randomAreaIndex << " max " << planet->locations.size() - 1 << endl;
+  Location* area =  (Location*)planet->locations[randomAreaIndex];
+  
+  return area;
 }
 
 Location* Game::buildSolarSystem() {

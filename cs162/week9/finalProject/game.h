@@ -18,6 +18,8 @@ class Game {
   void loadBounties();
   void setBountyLocation();
 
+  Location* pickBountyLocation(Location* space);
+
   Location* buildSolarSystem();
   //Location* buildEarth();
   Location* buildMars();
