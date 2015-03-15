@@ -2,6 +2,7 @@
 #define QUESTION
 #include "gameEntity.h"
 #include <string>
+#include <vector>
 
 class Question : public GameEntity {
   int cost;
@@ -12,10 +13,14 @@ class Question : public GameEntity {
 
 public:
   void addAnswer(string ans);
+  string getAnswer();
+  
   void addClueSegue(string seg);
+  string getClueSegue();
+  
   void setCost(int cost);
   int getCost();
-  string getAnswer();
+
   string getLabel();
   Question(string q);
 };

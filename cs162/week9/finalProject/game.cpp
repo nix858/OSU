@@ -6,6 +6,7 @@
 #include "question.h"
 #include "person.h"
 #include "menu.h"
+#include <stack>
 
 void Game::start() {
   loadBounties();
@@ -13,8 +14,12 @@ void Game::start() {
   gameState->money = 50000;
   Location* space = buildSolarSystem();
   gameState->currentLocation = space;
+  gameState->locationHistory = new stack<GameEntity*>();
+  gameState->locationHistory->push(space);
   //TODO: random select location;
-  gameState->bountyLocation = space->locations[0]->locations[1];
+  Location* mars = (Location*)space->locations[0];
+
+  gameState->bountyLocation = mars;
   //Bounty Loop
   do
   {
@@ -61,15 +66,15 @@ Location* Game::buildBar(char* name) {
   looking->addAnswer("I don't think so");
   looking->addClueSegue("actually, now that you mention it");
 
-  Question* lookingBribe = new Question("Have you seen this person?");
-  lookingBribe->addAnswer("nah");
-  lookingBribe->addClueSegue("now we're talkin");
-  lookingBribe->setCost(5000);
+  Question* bribe = new Question("Have you seen this person?");
+  bribe->addAnswer("nah");
+  bribe->addClueSegue("now we're talkin");
+  bribe->setCost(5000);
 
   Person* barTender = new Person();
   barTender->addQuestion(getDrink);
   barTender->addQuestion(looking);
-  barTender->addQuestion(lookingBribe);
+  barTender->addQuestion(bribe);
   
   bar->addLocation(barTender);
 

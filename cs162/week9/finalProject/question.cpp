@@ -1,20 +1,26 @@
 #include "question.h"
 #include <string>
+#include <sstream>
 
 Question::Question(string q) {
   this->question = q;
   this->cost = 0; //default
 }
 
-Question::addAnswer(string ans) {
-  answers.push_back(ans);
+void Question::addAnswer(string ans) {
+  this->answers.push_back(ans);
 }
 
-Question::addClueSegue(string seg) {
+void Question::addClueSegue(string seg) {
   clueSegues.push_back(seg);
 }
 
-Question::setCost(int cost) {
+string Question::getClueSegue() {
+  //TODO: random selection
+  return clueSegues[0];
+}
+
+void Question::setCost(int cost) {
   this->cost = cost;
 }
 
@@ -22,16 +28,16 @@ int Question::getCost() {
   return this->cost;
 }
 
-Question::getLabel() {
-  string suffix = "";
+string Question::getLabel() {
+  stringstream suffix;
   if (cost > 0)
   {
-    suffix = " ($" + cost.str() + ")";
+    suffix << " ($" << cost << ")";
   }
-  return question + suffix;
+  return question + suffix.str();
 }
 
-Question::getAnswer() {
+string Question::getAnswer() {
   //TODO: random ans
   return answers[0];
 }

@@ -3,7 +3,7 @@
 #include "gameState.h"
 #include "menu.h"
 
-void Location::addLocation(Location * loc) {
+void Location::addLocation(Location* loc) {
   this->locations.push_back(loc);
 }
 
@@ -17,10 +17,9 @@ string Location::getLabel() {
 
 void Location::selectAction(GameState* gameState) {
   cout << "Welcome to " << this->getLabel();
-  Menu moveMenu((char*)"Where do you want to go?", this->locations);
-  gameState->returnLocation = gameState->currentLocation;
-  Location selected = (Location)(moveMenu.run());      
-  gameState->currentLocation = selected; //We know this is a location so safe to cast
+  Menu moveMenu((char*)"Where do you want to go?", this->locations);   
+  Location* selected = (Location*)(moveMenu.run(gameState->locationHistory));
+  gameState->currentLocation = selected;
 }
 
 string Location::getClue(int level) {
@@ -35,4 +34,8 @@ string Location::getClue(int level) {
     //TODO: randomly select level 3 clue
     return "pee";
   }
+}
+
+Location::Location(){
+  //boop
 }

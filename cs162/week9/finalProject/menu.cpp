@@ -1,31 +1,47 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <stack>
 #include "menu.h"
-#include "GameEntity.h"
-i
+#include "gameEntity.h"
+
 using namespace std;
 
-
-  
 Menu::Menu(char* prompt, vector<GameEntity*> items) {
   this->items = items;
   this->prompt = prompt;
 }
 
-MenuItem* Menu::run() {
-  cout << prompt << ":" << endls;
-  for (uint i = 0; i < items.size(); ++i)
-  {
-    cout << i << ": " << items[i]->getLabel() << endl;
-  }
+GameEntity* Menu::run() {
+  return run(NULL);
+} 
 
+GameEntity* Menu::run(stack<GameEntity*>* history) {
+  cout << prompt << ":" << endl;
+  uint i = 0;
+  for (; i < items.size(); ++i) {
+    cout << i + 1 << ": " << items[i]->getLabel() << endl;
+  }
+  
+  if (history != NULL) {
+    cout << i + 1 << ": back to " << history->top()->getLabel(); 
+  }
+  
   bool validSelection = true;
-  int selection;
-  do
-  {
-    // do selection
+  uint selection;
+  do {
+    cin >> selection;
   } while (!validSelection);
 
-  return items[selection];
+  if (selection == i + 1) {     //Go back
+    GameEntity* tmp = history->top();
+    history->pop();
+    return tmp;
+  } else {
+    if (history != NULL)
+    {
+      history->push(items[selection - 1]);
+    }
+  }
+  return items[selection - 1];
 }
