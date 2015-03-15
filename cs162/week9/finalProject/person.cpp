@@ -8,19 +8,28 @@
 
 
 void Person::selectAction(GameState* gameState) {
-  cout << "Talking to " << this->getLabel();
-  Menu talkMenu((char*)"What do you want to say?", this->questions); 
-  Question* q = (Question*)talkMenu.run();
+  cout << "Talking to " << this->getLabel() << endl;
+  Menu talkMenu((char*)"What do you want to say?", this->questions);
+  GameEntity* back = gameState->locationHistory->top();
+  GameEntity* sel = talkMenu.run(back);
+  
+  if (sel == back)
+  {
+    gameState->currentLocation = (Location*)sel;
+    gameState->locationHistory->pop();
+    return; 
+  }
+  
+  Question* q = (Question*)sel;
   gameState->money -= q->getCost();
   cout << '\t' << q->getAnswer() << endl;
 
   if (wonClue())
   {
     cout << q->getClueSegue() << "... ";
-    cout << gameState->bountyLocation->getClue(gameState->clueLevel);
+    cout << gameState->bountyLocation->getClue(gameState->clueLevel) << endl;
   }
 
-  gameState->currentLocation = (Location*)gameState->locationHistory->top();
 }
 
 bool Person::wonClue() {

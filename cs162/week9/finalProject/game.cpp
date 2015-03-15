@@ -15,7 +15,7 @@ void Game::start() {
   Location* space = buildSolarSystem();
   gameState->currentLocation = space;
   gameState->locationHistory = new stack<GameEntity*>();
-  gameState->locationHistory->push(space);
+
   //TODO: random select location;
   Location* mars = (Location*)space->locations[0];
 
@@ -23,11 +23,11 @@ void Game::start() {
   //Bounty Loop
   do
   {
+    
     gameState->bountyCaptured = false;
     Menu bountyMenu((char*)"Select a bounty", allBounties);
     Bounty* sel = (Bounty*)(bountyMenu.run());
     gameState->bounty = sel;
-    
     //Action Loop
     do
     {
@@ -40,6 +40,7 @@ void Game::start() {
 
 Location* Game::buildSolarSystem() {
   Location* ss = new Location();
+  ss->setName("space");
   ss->addLocation(buildMars());
   return ss;
 }

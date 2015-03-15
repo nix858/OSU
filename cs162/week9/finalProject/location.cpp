@@ -16,9 +16,18 @@ string Location::getLabel() {
 }
 
 void Location::selectAction(GameState* gameState) {
-  cout << "Welcome to " << this->getLabel();
-  Menu moveMenu((char*)"Where do you want to go?", this->locations);   
-  Location* selected = (Location*)(moveMenu.run(gameState->locationHistory));
+  cout << "Current location: " << this->getLabel() << endl;
+  Menu moveMenu((char*)"Where do you want to go?", this->locations);
+  
+  GameEntity* back = (gameState->locationHistory->empty()) ?
+                      NULL : gameState->locationHistory->top();
+  
+  Location* selected = (Location*)moveMenu.run(back);
+  if (selected == back) {
+    gameState->locationHistory->pop();
+  } else {
+    gameState->locationHistory->push(gameState->currentLocation);
+  }
   gameState->currentLocation = selected;
 }
 

@@ -16,32 +16,26 @@ GameEntity* Menu::run() {
   return run(NULL);
 } 
 
-GameEntity* Menu::run(stack<GameEntity*>* history) {
+GameEntity* Menu::run(GameEntity* back) {
   cout << prompt << ":" << endl;
   uint i = 0;
   for (; i < items.size(); ++i) {
     cout << i + 1 << ": " << items[i]->getLabel() << endl;
   }
   
-  if (history != NULL) {
-    cout << i + 1 << ": back to " << history->top()->getLabel(); 
+  if (back != NULL) {
+    cout << i + 1 << ": back to " << back->getLabel() << endl; 
   }
-  
+
   bool validSelection = true;
   uint selection;
   do {
     cin >> selection;
+    //TODO: validate selection
   } while (!validSelection);
-
-  if (selection == i + 1) {     //Go back
-    GameEntity* tmp = history->top();
-    history->pop();
-    return tmp;
-  } else {
-    if (history != NULL)
-    {
-      history->push(items[selection - 1]);
-    }
+  if (back != NULL && selection == i + 1) {     //Go back
+    return back;
   }
+  
   return items[selection - 1];
 }

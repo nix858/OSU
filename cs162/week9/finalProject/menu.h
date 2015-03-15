@@ -14,7 +14,7 @@ class Menu {
 public:
   Menu(char* prompt, vector<GameEntity*> items);
   GameEntity* run();
-  GameEntity* run(stack<GameEntity*>* history);
+  GameEntity* run(GameEntity* back);
 };
 
 #endif
