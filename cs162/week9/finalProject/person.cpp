@@ -24,26 +24,29 @@ void Person::selectAction(GameState* gameState) {
   gameState->money -= q->getCost();
   cout << '\t' << '"' << q->getAnswer() << '"' << endl;
 
-  if (wonClue())
-  {
-    cout << '\t' << '"' << q->getClueSegue() << "... ";
-    cout << gameState->bountyLocation->getClue(gameState->clueLevel) << '"' << endl << endl;
-    gameState->clueLevel += 1; 
+  if (q->saleItem) {
+    gameState->inventory.push_back(q->saleItem);
+  } else {
+    if (wonClue(q->getOdds()))
+    {
+      string clue = gameState->bountyLocation->getClue(gameState->clueLevel);
+      cout << '\t' << '"' << q->getClueSegue() << "... ";
+      cout << clue << '"' << endl << endl;
+      gameState->clueLevel += 1;
+      gameState->clues.push_back(clue);
+    }
   }
+  
   cin.ignore(10000,'\n');
   cout << "press enter to continue.";
   cin.get();
 }
 
-bool Person::wonClue() {
-  //TODO: coin flip? roll dice?
-  return true;
+bool Person::wonClue(int odds) {
+  int res = rnd.between(1, odds);  
+  return res == 1;
 }
 
 void Person::addQuestion(Question* q) {
   questions.push_back(q);
-}
-
-string Person::getLabel() {
-  return "bar tender";
 }

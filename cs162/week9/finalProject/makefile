@@ -8,9 +8,9 @@ LDFLAGS = -lboost_date_time
 
 OBJS =
 
-SOURCES = main.cpp bounty.cpp game.cpp gameEntity.cpp location.cpp menu.cpp person.cpp question.cpp random.cpp
+SOURCES = main.cpp area.cpp bounty.cpp game.cpp gameEntity.cpp invitem.cpp location.cpp menu.cpp person.cpp planet.cpp question.cpp random.cpp
 
-HEADERS = bounty.h game.h gameEntity.h gameState.h location.h menu.h person.h question.h random.h
+HEADERS = area.h bounty.h game.h gameEntity.h gameState.h invitem.h location.h menu.h person.h planet.h question.h random.h
 
 OUTPUT = bebop
 

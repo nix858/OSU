@@ -9,6 +9,10 @@ void Bounty::setName(string name) {
   this->name = name;
 }
 
+void Bounty::setCrime(string crime) {
+  this->crime = crime;
+}
+
 void Bounty::setValue(int val) {
   this->value = val;
 }
